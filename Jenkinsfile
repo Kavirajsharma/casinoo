@@ -20,10 +20,10 @@ pipeline {
             steps {
                 script {
                     // Stop and remove any running container with same name
-                    sh 'docker rm -f static-site || true'
+                    bat 'docker rm -f static-site || true'
 
                     // Run the new container
-                    sh 'docker run -d -p 8080:80 --name static-site my-static-site'
+                    bat 'docker run -d -p 8080:80 --name static-site my-static-site'
                 }
             }
         }
