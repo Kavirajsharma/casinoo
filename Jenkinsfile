@@ -23,7 +23,7 @@ pipeline {
                     bat 'docker rm -f static-site || true'
 
                     // Run the new container
-                    bat 'docker run -d -p 8080:80 --name static-site my-static-site'
+                    bat 'docker run -d -p 5000:80 --name static-site my-static-site'
                 }
             }
         }
