@@ -2,19 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Install') {
+        stage('Pull from GitHub') {
             steps {
-                sh 'npm install'
+                echo 'Code pulled from GitHub repository.'
             }
         }
-        stage('Build') {
+
+        stage('Build Docker Image') {
             steps {
-                sh 'npm run build'
+                script {
+                    dockerImage = docker.build("my-static-site")
+                }
             }
         }
-        stage('Deploy') {
+
+        stage('Run Docker Container') {
             steps {
-                echo 'Deploying app...'
+                script {
+                    // Stop and remove any running container with same name
+                    sh 'docker rm -f static-site || true'
+
+                    // Run the new container
+                    sh 'docker run -d -p 8080:80 --name static-site my-static-site'
+                }
             }
         }
     }
