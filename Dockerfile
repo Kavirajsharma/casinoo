@@ -1,11 +1,14 @@
-# Use a lightweight web server image
+# Use Nginx base image
 FROM nginx:alpine
 
-# Copy your built frontend files into Nginx's default public folder
-COPY . /usr/share/nginx/html
+# Clean default nginx files
+RUN rm -rf /usr/share/nginx/html/*
 
-# Expose port 80 to access the website
+# Copy everything from project into nginx html folder
+COPY . /usr/share/nginx/html/
+
+# Expose port 80 (Nginx default)
 EXPOSE 80
 
-# Start Nginx server automatically
+# Run Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
